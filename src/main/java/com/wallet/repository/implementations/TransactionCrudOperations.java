@@ -4,7 +4,6 @@ import com.wallet.database.ConnectionToDb;
 import com.wallet.model.Transaction;
 import com.wallet.model.type.TransactionType;
 import com.wallet.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -174,7 +173,8 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
   }
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();
