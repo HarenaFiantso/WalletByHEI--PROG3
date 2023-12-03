@@ -33,6 +33,5 @@ CREATE TABLE IF NOT EXISTS transaction
     amount           DOUBLE PRECISION NOT NULL,
     label            VARCHAR(255)     NOT NULL,
     account_id       INT              NOT NULL,
-    category_id      INT              NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account (account_id)
 );
