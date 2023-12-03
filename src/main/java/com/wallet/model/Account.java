@@ -1,6 +1,8 @@
 package com.wallet.model;
 
 import com.wallet.model.type.AccountType;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,4 +18,5 @@ public class Account {
   private List<Transaction> transactionList;
   private Double balance;
   private int currencyId;
+  private LocalDateTime lastTransactionDate;
 }
