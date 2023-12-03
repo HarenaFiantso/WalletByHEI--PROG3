@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class Currency {
   private Long currencyId;
   private CurrencyNameType currencyName;
-  private CurrencyCodeType currencyCodeType;
+  private CurrencyCodeType currencyCode;
 }
