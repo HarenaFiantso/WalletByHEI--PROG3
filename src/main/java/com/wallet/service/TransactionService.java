@@ -3,7 +3,6 @@ package com.wallet.service;
 import com.wallet.model.Account;
 import com.wallet.model.Transaction;
 import com.wallet.model.type.TransactionType;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,7 +10,8 @@ public class TransactionService {
 
   /* TODO: Create a function that allows you to make a transaction in an account (debit or credit)
    *   - Should write a test for this method */
-  public Account performTransaction(Account account, TransactionType transactionType, Double amount) throws IllegalAccessException {
+  public Account performTransaction(Account account, TransactionType transactionType, Double amount)
+      throws IllegalAccessException {
     LocalDateTime transactionDate = LocalDateTime.now();
 
     if (transactionType == TransactionType.DEBIT) {
