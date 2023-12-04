@@ -6,7 +6,9 @@ import com.wallet.model.type.TransactionType;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AccountService {
 
@@ -30,5 +32,12 @@ public class AccountService {
     }
 
     return balance;
+  }
+
+  /* TODO: (Bonus) Create a function to obtain the balance of the current account
+   *   - Should create a test for this method */
+  public Double getCurrentBalance(Account account) {
+    LocalDateTime currentDateTime = LocalDateTime.now();
+    return getBalanceAtDateTime(account, currentDateTime);
   }
 }
