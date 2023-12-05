@@ -3,7 +3,6 @@ package com.wallet.service;
 import com.wallet.model.Account;
 import com.wallet.model.Transaction;
 import com.wallet.model.type.TransactionType;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -39,5 +38,22 @@ public class AccountService {
   public Double getCurrentBalance(Account account) {
     LocalDateTime currentDateTime = LocalDateTime.now();
     return getBalanceAtDateTime(account, currentDateTime);
+  }
+
+  /* TODO: Create a function that allows to obtain balance history of an account in interval of date and time
+   *   - Should create a test for this method */
+  public Map<LocalDateTime, Double> getBalanceHistoryInInterval(
+      Account account, LocalDateTime startDate, LocalDateTime endDate) {
+    Map<LocalDateTime, Double> balanceHistory = new HashMap<>();
+    LocalDateTime currentDateTime = startDate;
+
+    while (!currentDateTime.isAfter(endDate)) {
+      Double balanceAtDateTime = getBalanceAtDateTime(account, currentDateTime);
+      balanceHistory.put(currentDateTime, balanceAtDateTime);
+
+      currentDateTime = currentDateTime.plusSeconds(1);
+    }
+
+    return balanceHistory;
   }
 }
