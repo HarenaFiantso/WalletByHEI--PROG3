@@ -33,6 +33,16 @@ CREATE TABLE IF NOT EXISTS transaction
     amount           DOUBLE PRECISION NOT NULL,
     label            VARCHAR(255)     NOT NULL,
     account_id       INT              NOT NULL,
-    category_id      INT              NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account (account_id)
+);
+
+-- Creating table transfer_history
+CREATE TABLE IF NOT EXISTS transfer_history
+(
+    transfer_history      SERIAL PRIMARY KEY,
+    transfer_date         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    debit_transaction_id  INT       NOT NULL,
+    credit_transaction_id INT       NOT NULL,
+    FOREIGN KEY (debit_transaction_id) REFERENCES transaction (transaction_id),
+    FOREIGN KEY (credit_transaction_id) REFERENCES transaction (transaction_id)
 );
