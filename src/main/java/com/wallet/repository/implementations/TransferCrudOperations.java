@@ -3,7 +3,6 @@ package com.wallet.repository.implementations;
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.TransferHistory;
 import com.wallet.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,7 +161,8 @@ public class TransferCrudOperations implements CrudOperations<TransferHistory> {
   }
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();
