@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS transfer_history
 (
-    transfer_history      SERIAL PRIMARY KEY,
+    transfer_history_id      SERIAL PRIMARY KEY,
     transfer_date         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     debit_transaction_id  INT       NOT NULL,
     credit_transaction_id INT       NOT NULL,
