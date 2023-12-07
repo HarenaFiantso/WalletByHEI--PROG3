@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CurrencyValueRepository implements CrudOperations<CurrencyValue> {
+public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue> {
   private static final String CURRENCY_VALUE_ID_COLUMN = "currency_value_id";
   private static final String CURRENCY_VALUE_DATE_COLUMN = "currency_value_date";
   private static final String EXCHANGE_RATE_COLUMN = "exchange_rate";
