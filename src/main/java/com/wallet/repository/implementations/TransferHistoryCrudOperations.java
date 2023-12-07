@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransferCrudOperations implements CrudOperations<TransferHistory> {
+public class TransferHistoryCrudOperations implements CrudOperations<TransferHistory> {
   private static final String TRANSFER_HISTORY_ID_COLUMN = "transfer_history_id";
   private static final String TRANSFER_DATE_COLUMN = "transfer_date";
   private static final String DEBIT_TRANSACTION_ID_COLUMN = "debit_transaction_id";
