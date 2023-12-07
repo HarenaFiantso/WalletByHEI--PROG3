@@ -3,7 +3,6 @@ package com.wallet.repository.implementations;
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.CurrencyValue;
 import com.wallet.repository.CrudOperations;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,12 +40,11 @@ public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue
   }
 
   @Override
-  public void delete(CurrencyValue toDelete) {
-
-  }
+  public void delete(CurrencyValue toDelete) {}
 
   @Override
-  public void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+  public void closeResources(
+      Connection connection, PreparedStatement statement, ResultSet resultSet) {
     try {
       if (resultSet != null) {
         resultSet.close();
@@ -79,7 +77,8 @@ public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue
       if (resultSet.next()) {
         currencyValue = new CurrencyValue();
         currencyValue.setCurrencyValueId(resultSet.getLong(CURRENCY_VALUE_ID_COLUMN));
-        currencyValue.setCurrencyValueDate(resultSet.getTimestamp(CURRENCY_VALUE_DATE_COLUMN).toLocalDateTime());
+        currencyValue.setCurrencyValueDate(
+            resultSet.getTimestamp(CURRENCY_VALUE_DATE_COLUMN).toLocalDateTime());
         currencyValue.setExchangeRate(resultSet.getDouble(EXCHANGE_RATE_COLUMN));
         currencyValue.setSourceCurrencyId(resultSet.getInt(SOURCE_CURRENCY_ID_COLUMN));
         currencyValue.setDestinationCurrencyId(resultSet.getInt(DESTINATION_CURRENCY_ID_COLUMN));
