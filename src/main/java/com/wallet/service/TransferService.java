@@ -6,7 +6,6 @@ import com.wallet.repository.implementations.CurrencyCrudOperations;
 import com.wallet.repository.implementations.CurrencyValueCrudOperations;
 import com.wallet.repository.implementations.TransactionCrudOperations;
 import com.wallet.repository.implementations.TransferHistoryCrudOperations;
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -58,8 +57,8 @@ public class TransferService {
   }
 
   /* TODO: Create a function to transfer money between two accounts (fourth question b, in the case where accounts have
-      different currencies)
-      - Should write a test for this method */
+  different currencies)
+  - Should write a test for this method */
   public void transferMoneySecondCaseFirstPart(
       Account debitAccount, Account creditAccount, Double amount) {
     if (!isDifferentCurrency(debitAccount, creditAccount)) {
@@ -99,7 +98,7 @@ public class TransferService {
 
   private Boolean canConvertCurrencies() {
     /* TODO: If we want to allow conversion between EUR and MGA currencies, this method must be adjusted accordingly to
-        return true when conversion is possible, takes sourceCurrencyId and destinationCurrencyId as parameters */
+    return true when conversion is possible, takes sourceCurrencyId and destinationCurrencyId as parameters */
     return false;
   }
 
