@@ -99,7 +99,7 @@ public class TransferService {
 
   private Boolean canConvertCurrencies() {
     /* TODO: If we want to allow conversion between EUR and MGA currencies, this method must be adjusted accordingly to
-    return true when conversion is possible, takes sourceCurrencyId and destinationCurrencyId as parameters */
+        return true when conversion is possible, takes sourceCurrencyId and destinationCurrencyId as parameters */
     return false;
   }
 
