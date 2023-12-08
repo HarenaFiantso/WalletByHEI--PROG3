@@ -5,7 +5,6 @@ import com.wallet.model.Account;
 import com.wallet.model.Transaction;
 import com.wallet.model.type.TransactionType;
 import com.wallet.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -195,7 +194,8 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
     }
   }
 
-  public List<Transaction> findTransfersBetweenAccounts(Account euroAccount, Account ariaryAccount) {
+  public List<Transaction> findTransfersBetweenAccounts(
+      Account euroAccount, Account ariaryAccount) {
     List<Transaction> transactions = new ArrayList<>();
     Connection connection = null;
     PreparedStatement statement = null;
