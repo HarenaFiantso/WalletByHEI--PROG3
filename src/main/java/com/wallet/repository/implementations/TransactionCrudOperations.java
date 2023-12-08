@@ -1,9 +1,11 @@
 package com.wallet.repository.implementations;
 
 import com.wallet.database.ConnectionToDb;
+import com.wallet.model.Account;
 import com.wallet.model.Transaction;
 import com.wallet.model.type.TransactionType;
 import com.wallet.repository.CrudOperations;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,9 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
           + " amount = ?, label = ?, account_id = ? WHERE transaction_id = ?"
           + " RETURNING *";
   private static final String DELETE_QUERY = "DELETE FROM transaction WHERE transaction_id = ?";
+
+  private static final String SELECT_TRANSFERS_BETWEEN_ACCOUNTS =
+      "SELECT * FROM transaction WHERE account_id = ? OR account_id = ?";
 
   @Override
   public Transaction findById(Long toFind) {
@@ -188,5 +193,41 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  public List<Transaction> findTransfersBetweenAccounts(Account euroAccount, Account ariaryAccount) {
+    List<Transaction> transactions = new ArrayList<>();
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+    try {
+      connection = ConnectionToDb.getConnection();
+      statement = connection.prepareStatement(SELECT_TRANSFERS_BETWEEN_ACCOUNTS);
+      statement.setInt(1, Math.toIntExact(euroAccount.getAccountId()));
+      statement.setInt(2, Math.toIntExact(ariaryAccount.getAccountId()));
+
+      resultSet = statement.executeQuery();
+
+      while (resultSet.next()) {
+        Transaction transaction = new Transaction();
+        transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
+        transaction.setTransactionDate(
+            Timestamp.valueOf(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN).toLocalDateTime()));
+        transaction.setTransactionType(
+            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+        transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
+        transaction.setLabel(resultSet.getString(LABEL_COLUMN));
+        transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
+
+        transactions.add(transaction);
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    } finally {
+      closeResources(connection, statement, resultSet);
+    }
+
+    return transactions;
   }
 }
