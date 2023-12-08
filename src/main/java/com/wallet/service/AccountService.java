@@ -1,8 +1,12 @@
 package com.wallet.service;
 
 import com.wallet.model.Account;
+import com.wallet.model.CurrencyValue;
 import com.wallet.model.Transaction;
 import com.wallet.model.type.TransactionType;
+import com.wallet.repository.implementations.CurrencyValueCrudOperations;
+import com.wallet.repository.implementations.TransactionCrudOperations;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -55,5 +59,30 @@ public class AccountService {
     }
 
     return balanceHistory;
+  }
+
+  private final TransactionCrudOperations transactionCrudOperations = new TransactionCrudOperations();
+  private final CurrencyValueCrudOperations currencyValueCrudOperations = new CurrencyValueCrudOperations();
+
+  /* TODO: Create a function to transfer money between two accounts (fourth question b | first part)
+   *   - Should write a test for this method */
+  public Double calculateAriaryBalance(Account euroAccount, Account ariaryAccount, LocalDateTime dateTime) {
+    List<Transaction> euroToAriaryTransfers = transactionCrudOperations.findTransfersBetweenAccounts(euroAccount, ariaryAccount);
+
+    double ariaryBalance = 0.0;
+
+    for (Transaction transfer : euroToAriaryTransfers) {
+      Double euroAmount = transfer.getAmount();
+
+      CurrencyValue currencyValue =
+          currencyValueCrudOperations.findCurrencyValueForDate(transfer.getTransactionDate());
+
+      Double exchangeRate = currencyValue.getExchangeRate();
+      double ariaryEquivalent = euroAmount * exchangeRate;
+
+      ariaryBalance += ariaryEquivalent;
+    }
+
+    return ariaryBalance;
   }
 }

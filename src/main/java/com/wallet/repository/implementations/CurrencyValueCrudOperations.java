@@ -3,10 +3,8 @@ package com.wallet.repository.implementations;
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.CurrencyValue;
 import com.wallet.repository.CrudOperations;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.List;
 
 public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue> {
@@ -18,6 +16,8 @@ public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue
 
   private static final String SELECT_BY_CURRENCIES =
       "SELECT * FROM currency_value WHERE source_currency_id = ? AND destination_currency_id = ?";
+  private static final String SELECT_FOR_DATE =
+      "SELECT * FROM currency_value WHERE currency_value_date = ?";
 
   @Override
   public CurrencyValue findById(Long toFind) {
@@ -40,7 +40,8 @@ public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue
   }
 
   @Override
-  public void delete(CurrencyValue toDelete) {}
+  public void delete(CurrencyValue toDelete) {
+  }
 
   @Override
   public void closeResources(
@@ -86,6 +87,37 @@ public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue
     } catch (SQLException e) {
       throw new RuntimeException(
           "Failed to retrieve currency value by currencies : " + e.getMessage());
+    } finally {
+      closeResources(connection, statement, resultSet);
+    }
+
+    return currencyValue;
+  }
+
+  public CurrencyValue findCurrencyValueForDate(Timestamp transactionDate) {
+    CurrencyValue currencyValue = null;
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+    try {
+      connection = ConnectionToDb.getConnection();
+      statement = connection.prepareStatement(SELECT_FOR_DATE);
+      statement.setTimestamp(1, transactionDate);
+
+      resultSet = statement.executeQuery();
+
+      if (resultSet.next()) {
+        currencyValue = new CurrencyValue();
+        currencyValue.setCurrencyValueId(resultSet.getLong(CURRENCY_VALUE_ID_COLUMN));
+        currencyValue.setCurrencyValueDate(
+            resultSet.getTimestamp(CURRENCY_VALUE_DATE_COLUMN).toLocalDateTime());
+        currencyValue.setExchangeRate(resultSet.getDouble(EXCHANGE_RATE_COLUMN));
+        currencyValue.setSourceCurrencyId(resultSet.getInt(SOURCE_CURRENCY_ID_COLUMN));
+        currencyValue.setDestinationCurrencyId(resultSet.getInt(DESTINATION_CURRENCY_ID_COLUMN));
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException("Failed to retrieve currency value for date : " + e.getMessage());
     } finally {
       closeResources(connection, statement, resultSet);
     }
