@@ -26,9 +26,9 @@ public class TransferService {
       throw new IllegalAccessException("An account couldn't done transfer for himself");
     }
 
-    Transaction debitTransaction = createTransaction(debitAccount, amount, TransactionType.DEBIT);
+    Transaction debitTransaction = createTransaction(debitAccount, amount, "DEBIT");
     Transaction creditTransaction =
-        createTransaction(creditAccount, amount, TransactionType.CREDIT);
+        createTransaction(creditAccount, amount, "CREDIT");
 
     /* Save transactions in the database */
     assert debitTransaction != null;
@@ -46,7 +46,7 @@ public class TransferService {
   }
 
   private Transaction createTransaction(
-      Account account, Double amount, TransactionType transactionType) {
+      Account account, Double amount, String transactionType) {
     Transaction transaction = new Transaction();
     transaction.setTransactionDate(Timestamp.valueOf(LocalDateTime.now()));
     transaction.setTransactionType(transactionType);
@@ -75,9 +75,9 @@ public class TransferService {
     Double exchangeRate = getExchangeRate(sourceCurrency, destinationCurrency);
     Double convertedAmount = amount * exchangeRate;
     Transaction debitTransaction =
-        createTransaction(debitAccount, convertedAmount, TransactionType.DEBIT);
+        createTransaction(debitAccount, convertedAmount, "DEBIT");
     Transaction creditTransaction =
-        createTransaction(creditAccount, convertedAmount, TransactionType.CREDIT);
+        createTransaction(creditAccount, convertedAmount, "CREDIT");
 
     /* Save transactions in the database */
     transactionCrudOperations.save(debitTransaction);

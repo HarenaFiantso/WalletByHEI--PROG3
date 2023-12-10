@@ -53,7 +53,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve transaction : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve transaction : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -77,8 +77,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         Transaction transaction = new Transaction();
         transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
         transaction.setTransactionDate(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN));
-        transaction.setTransactionType(
-            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+        transaction.setTransactionType(resultSet.getString(TRANSACTION_TYPE_COLUMN));
         transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
         transaction.setLabel(resultSet.getString(LABEL_COLUMN));
         transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
@@ -86,7 +85,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         transactions.add(transaction);
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve transactions : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve transactions : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -143,8 +142,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         if (resultSet.next()) {
           Transaction savedTransaction = new Transaction();
           savedTransaction.setTransactionDate(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN));
-          savedTransaction.setTransactionType(
-              TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+          savedTransaction.setTransactionType(resultSet.getString(TRANSACTION_TYPE_COLUMN));
           savedTransaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
           savedTransaction.setLabel(resultSet.getString(LABEL_COLUMN));
           savedTransaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
@@ -153,7 +151,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to save transaction : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to save transaction : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -171,7 +169,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
       statement.setLong(1, toDelete.getTransactionId());
 
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to delete transaction :" + e.getMessage());
+      throw new RuntimeException(STR."Failed to delete transaction :\{e.getMessage()}");
     } finally {
       closeResources(connection, statement, null);
     }
@@ -214,8 +212,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
         transaction.setTransactionDate(
             Timestamp.valueOf(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN).toLocalDateTime()));
-        transaction.setTransactionType(
-            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+        transaction.setTransactionType(resultSet.getString(TRANSACTION_TYPE_COLUMN));
         transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
         transaction.setLabel(resultSet.getString(LABEL_COLUMN));
         transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
