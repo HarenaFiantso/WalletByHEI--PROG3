@@ -59,7 +59,7 @@ public class AccountService {
       Double balanceAtDateTime = getBalanceAtDateTime(account, currentDateTime);
       balanceHistory.put(currentDateTime, balanceAtDateTime);
 
-      currentDateTime = currentDateTime.plusSeconds(1);
+      currentDateTime = currentDateTime.plusDays(1);
     }
 
     return balanceHistory;

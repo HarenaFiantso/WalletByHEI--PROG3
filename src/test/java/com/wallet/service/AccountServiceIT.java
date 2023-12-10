@@ -43,4 +43,28 @@ public class AccountServiceIT {
 
     assertEquals(50.0, balance);
   }
+
+  @Test
+  void testGetBalanceHistoryInInterval() {
+    List<Transaction> transactions = new ArrayList<>();
+    Transaction creditTransaction = new Transaction();
+    creditTransaction.setTransactionDate(Timestamp.valueOf(LocalDateTime.parse("2023-01-01T12:00:00")));
+    creditTransaction.setTransactionType("CREDIT");
+    creditTransaction.setAmount(100.0);
+    transactions.add(creditTransaction);
+
+    Transaction debitTransaction = new Transaction();
+    debitTransaction.setTransactionDate(Timestamp.valueOf(LocalDateTime.parse("2023-01-02T12:00:00")));
+    debitTransaction.setTransactionType("DEBIT");
+    debitTransaction.setAmount(50.0);
+    transactions.add(debitTransaction);
+
+    Account account = new Account();
+    account.setTransactionList(transactions);
+
+    LocalDateTime dateTimeToCheck = LocalDateTime.parse("2023-01-01T12:00:00");
+    Double balanceAtDateTime = accountService.getBalanceAtDateTime(account, dateTimeToCheck);
+
+    assertEquals(100.0, balanceAtDateTime);
+  }
 }
