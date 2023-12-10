@@ -1,7 +1,6 @@
 package com.wallet.service;
 
 import com.wallet.model.*;
-import com.wallet.model.type.TransactionType;
 import com.wallet.repository.implementations.CurrencyCrudOperations;
 import com.wallet.repository.implementations.CurrencyValueCrudOperations;
 import com.wallet.repository.implementations.TransactionCrudOperations;
@@ -27,8 +26,7 @@ public class TransferService {
     }
 
     Transaction debitTransaction = createTransaction(debitAccount, amount, "DEBIT");
-    Transaction creditTransaction =
-        createTransaction(creditAccount, amount, "CREDIT");
+    Transaction creditTransaction = createTransaction(creditAccount, amount, "CREDIT");
 
     /* Save transactions in the database */
     assert debitTransaction != null;
@@ -45,8 +43,7 @@ public class TransferService {
     transferHistoryCrudOperations.save(transferHistory);
   }
 
-  private Transaction createTransaction(
-      Account account, Double amount, String transactionType) {
+  private Transaction createTransaction(Account account, Double amount, String transactionType) {
     Transaction transaction = new Transaction();
     transaction.setTransactionDate(Timestamp.valueOf(LocalDateTime.now()));
     transaction.setTransactionType(transactionType);
@@ -74,10 +71,8 @@ public class TransferService {
 
     Double exchangeRate = getExchangeRate(sourceCurrency, destinationCurrency);
     Double convertedAmount = amount * exchangeRate;
-    Transaction debitTransaction =
-        createTransaction(debitAccount, convertedAmount, "DEBIT");
-    Transaction creditTransaction =
-        createTransaction(creditAccount, convertedAmount, "CREDIT");
+    Transaction debitTransaction = createTransaction(debitAccount, convertedAmount, "DEBIT");
+    Transaction creditTransaction = createTransaction(creditAccount, convertedAmount, "CREDIT");
 
     /* Save transactions in the database */
     transactionCrudOperations.save(debitTransaction);

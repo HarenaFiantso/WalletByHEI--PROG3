@@ -1,6 +1,5 @@
 package com.wallet.model;
 
-import com.wallet.model.type.TransactionType;
 import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
