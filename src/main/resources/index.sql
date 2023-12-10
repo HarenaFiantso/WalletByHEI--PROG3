@@ -12,6 +12,18 @@ CREATE TABLE IF NOT EXISTS currency
     currency_code currency_code NOT NULL
 );
 
+-- Creating currency value table
+CREATE TABLE IF NOT EXISTS currency_value
+(
+    currency_value_id       SERIAL PRIMARY KEY,
+    currency_value_date     DATE             NOT NULL DEFAULT CURRENT_DATE,
+    exchange_rate           DOUBLE PRECISION NOT NULL,
+    source_currency_id      INT              NOT NULL,
+    destination_currency_id INT              NOT NULL,
+    FOREIGN KEY (source_currency_id) REFERENCES currency (currency_id),
+    FOREIGN KEY (destination_currency_id) REFERENCES currency (currency_id)
+);
+
 -- Creating table account and type
 CREATE TYPE account_type AS ENUM ('BANK', 'CASH', 'MOBILE MONEY');
 CREATE TABLE IF NOT EXISTS account
@@ -34,4 +46,15 @@ CREATE TABLE IF NOT EXISTS transaction
     label            VARCHAR(255)     NOT NULL,
     account_id       INT              NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account (account_id)
+);
+
+-- Creating tables transfer history
+CREATE TABLE IF NOT EXISTS transfer_history
+(
+    transfer_history_id   SERIAL PRIMARY KEY,
+    transfer_date         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    debit_transaction_id  INT       NOT NULL,
+    credit_transaction_id INT       NOT NULL,
+    FOREIGN KEY (debit_transaction_id) REFERENCES transaction (transaction_id),
+    FOREIGN KEY (credit_transaction_id) REFERENCES transaction (transaction_id)
 );

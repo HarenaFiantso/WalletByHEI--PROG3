@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Account {
   private Long accountId;
   private String accountName;
-  private AccountType accountType;
+  private String accountType;
   private List<Transaction> transactionList;
   private Double balance;
   private int currencyId;
