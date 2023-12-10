@@ -52,7 +52,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve transaction : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve transaction : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -85,7 +85,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         transactions.add(transaction);
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve transactions : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve transactions : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -152,7 +152,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to save transaction : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to save transaction : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -170,7 +170,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
       statement.setLong(1, toDelete.getTransactionId());
 
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to delete transaction :" + e.getMessage());
+      throw new RuntimeException(STR."Failed to delete transaction :\{e.getMessage()}");
     } finally {
       closeResources(connection, statement, null);
     }

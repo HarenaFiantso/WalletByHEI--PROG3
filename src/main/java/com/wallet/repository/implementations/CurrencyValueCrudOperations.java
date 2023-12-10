@@ -86,7 +86,7 @@ public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue
       }
     } catch (SQLException e) {
       throw new RuntimeException(
-          "Failed to retrieve currency value by currencies : " + e.getMessage());
+          STR."Failed to retrieve currency value by currencies : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -117,7 +117,7 @@ public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue
         currencyValue.setDestinationCurrencyId(resultSet.getInt(DESTINATION_CURRENCY_ID_COLUMN));
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve currency value for date : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve currency value for date : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }

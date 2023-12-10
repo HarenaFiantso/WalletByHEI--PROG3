@@ -44,7 +44,7 @@ public class CurrencyCrudOperations implements CrudOperations<Currency> {
         currency.setCurrencyId(resultSet.getLong(CURRENCY_ID_COLUMN));
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve currency : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve currency : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -75,7 +75,7 @@ public class CurrencyCrudOperations implements CrudOperations<Currency> {
         currencies.add(currency);
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve currencies : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve currencies : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -134,7 +134,7 @@ public class CurrencyCrudOperations implements CrudOperations<Currency> {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to save currency : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to save currency : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -152,7 +152,7 @@ public class CurrencyCrudOperations implements CrudOperations<Currency> {
       statement.setLong(1, toDelete.getCurrencyId());
 
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to delete currency :" + e.getMessage());
+      throw new RuntimeException(STR."Failed to delete currency :\{e.getMessage()}");
     } finally {
       closeResources(connection, statement, null);
     }
