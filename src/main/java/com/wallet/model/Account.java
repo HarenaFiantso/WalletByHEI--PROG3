@@ -17,4 +17,8 @@ public class Account {
   private Double balance;
   private int currencyId;
   private LocalDateTime lastTransactionDate;
+
+  public Account(Long accountId) {
+    this.accountId = accountId;
+  }
 }

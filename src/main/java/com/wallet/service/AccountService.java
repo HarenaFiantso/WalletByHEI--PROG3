@@ -3,14 +3,15 @@ package com.wallet.service;
 import com.wallet.model.Account;
 import com.wallet.model.CurrencyValue;
 import com.wallet.model.Transaction;
-import com.wallet.model.type.TransactionType;
 import com.wallet.repository.implementations.CurrencyValueCrudOperations;
 import com.wallet.repository.implementations.TransactionCrudOperations;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class AccountService {
 
@@ -22,12 +23,14 @@ public class AccountService {
     Double balance = 0.0;
 
     for (Transaction transaction : transactions) {
-      if (transaction.getTransactionDate().toInstant().isBefore(Instant.from(dateTime))
-          || transaction.getTransactionDate().toLocalDateTime().isEqual(dateTime)) {
+      Instant transactionInstant = transaction.getTransactionDate().toInstant();
 
-        if (transaction.getTransactionType() == TransactionType.CREDIT) {
+      if (transactionInstant.isBefore(dateTime.atZone(ZoneId.systemDefault()).toInstant())
+          || transactionInstant.equals(dateTime.atZone(ZoneId.systemDefault()).toInstant())) {
+
+        if (Objects.equals(transaction.getTransactionType(), "CREDIT")) {
           balance += transaction.getAmount();
-        } else if (transaction.getTransactionType() == TransactionType.DEBIT) {
+        } else if (Objects.equals(transaction.getTransactionType(), "DEBIT")) {
           balance -= transaction.getAmount();
         }
       }
@@ -54,7 +57,7 @@ public class AccountService {
       Double balanceAtDateTime = getBalanceAtDateTime(account, currentDateTime);
       balanceHistory.put(currentDateTime, balanceAtDateTime);
 
-      currentDateTime = currentDateTime.plusSeconds(1);
+      currentDateTime = currentDateTime.plusDays(1);
     }
 
     return balanceHistory;
