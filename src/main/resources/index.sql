@@ -12,6 +12,13 @@ CREATE TABLE IF NOT EXISTS currency
     currency_code currency_code NOT NULL
 );
 
+-- Creating category table
+CREATE TABLE IF NOT EXISTS category
+(
+    category_id   SERIAL PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL
+);
+
 -- Creating currency_value table
 CREATE TABLE IF NOT EXISTS currency_value
 (
