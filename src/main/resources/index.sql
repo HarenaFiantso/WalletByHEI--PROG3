@@ -23,6 +23,13 @@ CREATE TABLE IF NOT EXISTS account
     FOREIGN KEY (currency_id) REFERENCES currency (currency_id)
 );
 
+-- Creating category table
+CREATE TABLE IF NOT EXISTS category
+(
+    category_id   SERIAL PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL
+);
+
 -- Creating tables transaction & category and type
 CREATE TYPE transaction_type AS ENUM ('CREDIT', 'DEBIT');
 CREATE TABLE IF NOT EXISTS transaction
@@ -35,3 +42,4 @@ CREATE TABLE IF NOT EXISTS transaction
     account_id       INT              NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account (account_id)
 );
+
