@@ -17,7 +17,7 @@ BEGIN
         WHERE
             t.account_id = selected_account_id AND
             t.transaction_type = 'CREDIT' AND
-            t.transaction_date_time BETWEEN start_datetime AND end_datetime
+            t.transaction_date BETWEEN start_datetime AND end_datetime
 
         UNION ALL
 
@@ -29,6 +29,6 @@ BEGIN
         WHERE
             t.account_id = selected_account_id AND
             t.transaction_type = 'DEBIT' AND
-            t.transaction_date_time BETWEEN start_datetime AND end_datetime;
+            t.transaction_date BETWEEN start_datetime AND end_datetime;
 END;
 $$;
