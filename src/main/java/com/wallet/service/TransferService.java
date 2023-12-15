@@ -12,7 +12,7 @@ public class TransferService {
   private final CurrencyCrudOperations currencyCrudOperations = new CurrencyCrudOperations();
   private final CurrencyValueCrudOperations currencyValueCrudOperations =
       new CurrencyValueCrudOperations();
-  private final TransactionCrudOperations transactionCrudOperations =
+  TransactionCrudOperations transactionCrudOperations =
       new TransactionCrudOperations();
   private final TransferHistoryCrudOperations transferHistoryCrudOperations =
       new TransferHistoryCrudOperations();
@@ -54,8 +54,8 @@ public class TransferService {
   }
 
   /* TODO: Create a function to transfer money between two accounts (fourth question b, in the case where accounts have
-  different currencies)
-  - Should write a test for this method */
+   *   - different currencies)
+   *   - Should write a test for this method */
   public void transferMoneySecondCaseFirstPart(
       Account debitAccount, Account creditAccount, Double amount) {
     if (!isDifferentCurrency(debitAccount, creditAccount)) {

@@ -2,7 +2,6 @@ package com.wallet.service;
 
 import com.wallet.model.Account;
 import com.wallet.model.Transaction;
-import com.wallet.model.type.TransactionType;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;

@@ -19,11 +19,11 @@ public class ConnectionToDb {
         try {
           connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
         } catch (SQLException e) {
-          throw new RuntimeException("Cannot connect to database : " + e.getMessage());
+          throw new RuntimeException(STR."Cannot connect to database : \{e.getMessage()}");
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to get connection : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to get connection : \{e.getMessage()}");
     }
     return connection;
   }

@@ -3,7 +3,6 @@ package com.wallet.repository.implementations;
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.CurrencyValue;
 import com.wallet.repository.CrudOperations;
-
 import java.sql.*;
 import java.util.List;
 
@@ -40,8 +39,7 @@ public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue
   }
 
   @Override
-  public void delete(CurrencyValue toDelete) {
-  }
+  public void delete(CurrencyValue toDelete) {}
 
   @Override
   public void closeResources(

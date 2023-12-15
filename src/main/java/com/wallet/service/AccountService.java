@@ -63,7 +63,7 @@ public class AccountService {
     return balanceHistory;
   }
 
-  private final TransactionCrudOperations transactionCrudOperations =
+  TransactionCrudOperations transactionCrudOperations =
       new TransactionCrudOperations();
   private final CurrencyValueCrudOperations currencyValueCrudOperations =
       new CurrencyValueCrudOperations();
