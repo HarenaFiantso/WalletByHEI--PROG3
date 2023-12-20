@@ -11,13 +11,13 @@ public class TransactionService {
 
   /* TODO: Create a function that allows you to make a transaction in an account (debit or credit)
    *   - Should write a test for this method */
-  public Account performTransaction(Account account, TransactionType transactionType, Double amount)
+  public Account performTransaction(Account account, String transactionType, Double amount)
       throws IllegalAccessException {
     LocalDateTime transactionDate = LocalDateTime.now();
 
-    if (transactionType == TransactionType.DEBIT) {
+    if (Objects.equals(transactionType, "DEBIT")) {
       debitAccount(account, amount);
-    } else if (transactionType == TransactionType.CREDIT) {
+    } else if (Objects.equals(transactionType, "CREDIT")) {
       creditAccount(account, amount);
     }
 
