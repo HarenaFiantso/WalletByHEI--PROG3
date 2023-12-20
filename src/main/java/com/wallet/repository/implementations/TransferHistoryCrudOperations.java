@@ -45,7 +45,7 @@ public class TransferHistoryCrudOperations implements CrudOperations<TransferHis
         transferHistory.setTransferHistoryId(resultSet.getLong(TRANSFER_HISTORY_ID_COLUMN));
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve account : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve account : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -75,7 +75,7 @@ public class TransferHistoryCrudOperations implements CrudOperations<TransferHis
         transferHistories.add(transferHistory);
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve transfers histories : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve transfers histories : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -136,7 +136,7 @@ public class TransferHistoryCrudOperations implements CrudOperations<TransferHis
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to save transfer history : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to save transfer history : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -154,7 +154,7 @@ public class TransferHistoryCrudOperations implements CrudOperations<TransferHis
       statement.setLong(1, toDelete.getTransferHistoryId());
 
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to delete transfer history :" + e.getMessage());
+      throw new RuntimeException(STR."Failed to delete transfer history :\{e.getMessage()}");
     } finally {
       closeResources(connection, statement, null);
     }

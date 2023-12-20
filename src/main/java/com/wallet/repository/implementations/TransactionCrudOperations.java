@@ -3,7 +3,6 @@ package com.wallet.repository.implementations;
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.Account;
 import com.wallet.model.Transaction;
-import com.wallet.model.type.TransactionType;
 import com.wallet.repository.CrudOperations;
 
 import java.sql.*;
@@ -53,7 +52,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve transaction : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve transaction : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -77,8 +76,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         Transaction transaction = new Transaction();
         transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
         transaction.setTransactionDate(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN));
-        transaction.setTransactionType(
-            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+        transaction.setTransactionType(resultSet.getString(TRANSACTION_TYPE_COLUMN));
         transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
         transaction.setLabel(resultSet.getString(LABEL_COLUMN));
         transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
@@ -86,7 +84,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         transactions.add(transaction);
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to retrieve transactions : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to retrieve transactions : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -143,8 +141,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         if (resultSet.next()) {
           Transaction savedTransaction = new Transaction();
           savedTransaction.setTransactionDate(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN));
-          savedTransaction.setTransactionType(
-              TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
+          savedTransaction.setTransactionType(resultSet.getString(TRANSACTION_TYPE_COLUMN));
           savedTransaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
           savedTransaction.setLabel(resultSet.getString(LABEL_COLUMN));
           savedTransaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
@@ -153,7 +150,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to save transaction : " + e.getMessage());
+      throw new RuntimeException(STR."Failed to save transaction : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }
@@ -171,7 +168,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
       statement.setLong(1, toDelete.getTransactionId());
 
     } catch (SQLException e) {
-      throw new RuntimeException("Failed to delete transaction :" + e.getMessage());
+      throw new RuntimeException(STR."Failed to delete transaction :\{e.getMessage()}");
     } finally {
       closeResources(connection, statement, null);
     }
@@ -202,28 +199,33 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
     ResultSet resultSet = null;
 
     try {
-      connection = ConnectionToDb.getConnection();
-      statement = connection.prepareStatement(SELECT_TRANSFERS_BETWEEN_ACCOUNTS);
-      statement.setInt(1, Math.toIntExact(euroAccount.getAccountId()));
-      statement.setInt(2, Math.toIntExact(ariaryAccount.getAccountId()));
+      Long euroAccountId = euroAccount.getAccountId();
+      Long ariaryAccountId = ariaryAccount.getAccountId();
 
-      resultSet = statement.executeQuery();
+      if (euroAccountId != null && ariaryAccountId != null) {
+        connection = ConnectionToDb.getConnection();
+        statement = connection.prepareStatement(SELECT_TRANSFERS_BETWEEN_ACCOUNTS);
+        statement.setInt(1, Math.toIntExact(euroAccount.getAccountId()));
+        statement.setInt(2, Math.toIntExact(ariaryAccount.getAccountId()));
 
-      while (resultSet.next()) {
-        Transaction transaction = new Transaction();
-        transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
-        transaction.setTransactionDate(
-            Timestamp.valueOf(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN).toLocalDateTime()));
-        transaction.setTransactionType(
-            TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
-        transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
-        transaction.setLabel(resultSet.getString(LABEL_COLUMN));
-        transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
+        resultSet = statement.executeQuery();
 
-        transactions.add(transaction);
+        while (resultSet.next()) {
+          Transaction transaction = new Transaction();
+          transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
+          transaction.setTransactionDate(Timestamp.valueOf(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN).toLocalDateTime()));
+          transaction.setTransactionType(resultSet.getString(TRANSACTION_TYPE_COLUMN));
+          transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
+          transaction.setLabel(resultSet.getString(LABEL_COLUMN));
+          transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
+
+          transactions.add(transaction);
+        }
+      } else {
+        throw new IllegalArgumentException("The account ID should not be null");
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException(STR."Failed the find transfer between account : \{e.getMessage()}");
     } finally {
       closeResources(connection, statement, resultSet);
     }

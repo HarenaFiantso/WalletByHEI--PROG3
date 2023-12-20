@@ -1,6 +1,5 @@
 package com.wallet.model;
 
-import com.wallet.model.type.AccountType;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -13,9 +12,13 @@ import lombok.NoArgsConstructor;
 public class Account {
   private Long accountId;
   private String accountName;
-  private AccountType accountType;
+  private String accountType;
   private List<Transaction> transactionList;
   private Double balance;
   private int currencyId;
   private LocalDateTime lastTransactionDate;
+
+  public Account(Long accountId) {
+    this.accountId = accountId;
+  }
 }
