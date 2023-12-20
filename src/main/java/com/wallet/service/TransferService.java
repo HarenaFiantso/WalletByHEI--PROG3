@@ -12,7 +12,7 @@ public class TransferService {
   private final CurrencyCrudOperations currencyCrudOperations = new CurrencyCrudOperations();
   private final CurrencyValueCrudOperations currencyValueCrudOperations =
       new CurrencyValueCrudOperations();
-  private final TransactionCrudOperations transactionCrudOperations =
+  TransactionCrudOperations transactionCrudOperations =
       new TransactionCrudOperations();
   private final TransferHistoryCrudOperations transferHistoryCrudOperations =
       new TransferHistoryCrudOperations();
