@@ -40,30 +40,17 @@ CREATE TABLE IF NOT EXISTS transaction
     amount           DOUBLE PRECISION NOT NULL,
     label            VARCHAR(255)     NOT NULL,
     account_id       INT              NOT NULL,
-    FOREIGN KEY (account_id) REFERENCES account (account_id)
+    category_id      INT              NOT NULL, 
+    FOREIGN KEY (account_id) REFERENCES account (account_id),
+    FOREIGN KEY (category_id) REFERENCES category (category_id)
 );
 
--- Add category_id column to the "transaction" table if it doesn't exist
-DO $$
-    BEGIN
-        BEGIN
-            ALTER TABLE "transaction"
-                ADD COLUMN category_id INT NOT NULL;
-        EXCEPTION
-            WHEN duplicate_column THEN
-            -- Ignore if the column already exists
-        END;
-    END $$;
-
--- Add foreign key constraint if it doesn't exist
-DO $$
-    BEGIN
-        BEGIN
-            ALTER TABLE "transaction"
-                ADD CONSTRAINT fk_transaction_category
-                    FOREIGN KEY (category_id) REFERENCES category(category_id);
-        EXCEPTION
-            WHEN duplicate_object THEN
-            -- Ignore if the constraint already exists
-        END;
-    END $$;
+CREATE TABLE IF NOT EXISTS transfer_history
+(
+    transfer_history_id   SERIAL PRIMARY KEY,
+    transfer_date         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    debit_transaction_id  INT       NOT NULL,
+    credit_transaction_id INT       NOT NULL,
+    FOREIGN KEY (debit_transaction_id) REFERENCES transaction (transaction_id),
+    FOREIGN KEY (credit_transaction_id) REFERENCES transaction (transaction_id)
+);
