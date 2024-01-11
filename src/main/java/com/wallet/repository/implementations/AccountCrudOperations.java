@@ -2,6 +2,7 @@ package com.wallet.repository.implementations;
 
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.Account;
+import com.wallet.model.Currency;
 import com.wallet.model.type.AccountType;
 import com.wallet.repository.CrudOperations;
 import java.sql.*;
@@ -104,18 +105,21 @@ public class AccountCrudOperations implements CrudOperations<Account> {
 
     try {
       connection = ConnectionToDb.getConnection();
+      Currency currency = new Currency();
+      int currencyId = currency.getCurrencyId().intValue();
+
       if (isNewAccount) {
         QUERY = INSERT_QUERY;
         statement = connection.prepareStatement(QUERY, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, toSave.getAccountName());
         statement.setString(2, String.valueOf(toSave.getAccountType()));
-        statement.setInt(3, toSave.getCurrencyId());
+        statement.setInt(3, currencyId);
       } else {
         QUERY = UPDATE_QUERY;
         statement = connection.prepareStatement(QUERY);
         statement.setString(1, toSave.getAccountName());
         statement.setString(2, String.valueOf(toSave.getAccountType()));
-        statement.setInt(3, toSave.getCurrencyId());
+        statement.setInt(3, currencyId);
         statement.setLong(4, toSave.getAccountId());
       }
 

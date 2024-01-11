@@ -1,5 +1,6 @@
 package com.wallet.model;
 
+import com.wallet.annotation.Column;
 import com.wallet.annotation.Table;
 import com.wallet.model.type.AccountType;
 import java.time.LocalDateTime;
@@ -13,11 +14,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 @Table(name = "account")
 public class Account {
+  @Column(name = "account_id")
   private Long accountId;
+
+  @Column(name = "account_name")
   private String accountName;
+
+  @Column(name = "account_type")
   private AccountType accountType;
-  private Double balance;
-  private LocalDateTime lastTransactionDate;
-  private List<Transaction> transactionList;
+
+  @Column(name = "currency_id")
   private int currencyId;
+
+  @Column private Double balance;
+
+  @Column private LocalDateTime lastTransactionDate;
+
+  @Column private List<Transaction> transactionList;
 }
