@@ -1,4 +1,4 @@
-package com.wallet.model.type;
+package com.wallet.model.types;
 
 public enum AccountType {
   BANK,

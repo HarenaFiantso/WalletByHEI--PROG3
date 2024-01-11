@@ -2,8 +2,8 @@ package com.wallet.repository.implementations;
 
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.Currency;
-import com.wallet.model.type.CurrencyCodeType;
-import com.wallet.model.type.CurrencyNameType;
+import com.wallet.model.types.CurrencyCodeType;
+import com.wallet.model.types.CurrencyNameType;
 import com.wallet.repository.CrudOperations;
 import java.sql.*;
 import java.util.ArrayList;

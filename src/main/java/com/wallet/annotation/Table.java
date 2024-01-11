@@ -1,4 +1,4 @@
-package com.wallet.annotations;
+package com.wallet.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
