@@ -3,6 +3,7 @@ package com.wallet.repository.implementations;
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.Account;
 import com.wallet.model.Transaction;
+import com.wallet.model.type.TransactionType;
 import com.wallet.repository.CrudOperations;
 
 import java.sql.*;
@@ -16,16 +17,17 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
   private static final String AMOUNT_COLUMN = "amount";
   private static final String LABEL_COLUMN = "label";
   private static final String ACCOUNT_ID_COLUMN = "account_id";
+  private static final String CATEGORY_ID_COLUMN = "category_id";
 
   private static final String SELECT_BY_ID_QUERY =
       "SELECT * FROM transaction WHERE transaction_id = ?";
   private static final String SELECT_ALL_QUERY = "SELECT * FROM transaction";
   private static final String INSERT_QUERY =
-      "INSERT INTO transaction (transaction_date, transaction_type, amount, label, account_id"
-          + ") VALUES (?, CAST(? AS transaction_type), ?, ?, ?) RETURNING *";
+      "INSERT INTO transaction (transaction_date, transaction_type, amount, label, account_id, category_id"
+          + ") VALUES (?, CAST(? AS transaction_type), ?, ?, ?, ?) RETURNING *";
   private static final String UPDATE_QUERY =
       "UPDATE transaction SET transaction_date = ?, transaction_type = CAST(? AS account_type),"
-          + " amount = ?, label = ?, account_id = ? WHERE transaction_id = ?"
+          + " amount = ?, label = ?, account_id = ?, category_id = ? WHERE transaction_id = ?"
           + " RETURNING *";
   private static final String DELETE_QUERY = "DELETE FROM transaction WHERE transaction_id = ?";
 
@@ -76,10 +78,11 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         Transaction transaction = new Transaction();
         transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
         transaction.setTransactionDate(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN));
-        transaction.setTransactionType(resultSet.getString(TRANSACTION_TYPE_COLUMN));
+        transaction.setTransactionType(TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
         transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
         transaction.setLabel(resultSet.getString(LABEL_COLUMN));
         transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
+        transaction.setCategoryId(resultSet.getInt(CATEGORY_ID_COLUMN));
 
         transactions.add(transaction);
       }
@@ -122,15 +125,17 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         statement.setDouble(3, toSave.getAmount());
         statement.setString(4, toSave.getLabel());
         statement.setInt(5, toSave.getAccountId());
+        statement.setInt(6, toSave.getCategoryId());
       } else {
         QUERY = UPDATE_QUERY;
         statement = connection.prepareStatement(QUERY);
         statement.setTimestamp(1, toSave.getTransactionDate());
         statement.setString(2, String.valueOf(toSave.getTransactionType()));
         statement.setDouble(3, toSave.getAmount());
-        statement.setInt(4, toSave.getAccountId());
         statement.setString(5, toSave.getLabel());
-        statement.setLong(6, toSave.getTransactionId());
+        statement.setInt(4, toSave.getAccountId());
+        statement.setInt(6, toSave.getCategoryId());
+        statement.setLong(7, toSave.getTransactionId());
       }
 
       boolean isResultSet = statement.execute();
@@ -141,7 +146,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
         if (resultSet.next()) {
           Transaction savedTransaction = new Transaction();
           savedTransaction.setTransactionDate(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN));
-          savedTransaction.setTransactionType(resultSet.getString(TRANSACTION_TYPE_COLUMN));
+          savedTransaction.setTransactionType(TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
           savedTransaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
           savedTransaction.setLabel(resultSet.getString(LABEL_COLUMN));
           savedTransaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));
@@ -214,7 +219,7 @@ public class TransactionCrudOperations implements CrudOperations<Transaction> {
           Transaction transaction = new Transaction();
           transaction.setTransactionId(resultSet.getLong(TRANSACTION_ID_COLUMN));
           transaction.setTransactionDate(Timestamp.valueOf(resultSet.getTimestamp(TRANSACTION_DATE_COLUMN).toLocalDateTime()));
-          transaction.setTransactionType(resultSet.getString(TRANSACTION_TYPE_COLUMN));
+          transaction.setTransactionType(TransactionType.valueOf(resultSet.getString(TRANSACTION_TYPE_COLUMN)));
           transaction.setAmount(resultSet.getDouble(AMOUNT_COLUMN));
           transaction.setLabel(resultSet.getString(LABEL_COLUMN));
           transaction.setAccountId(resultSet.getInt(ACCOUNT_ID_COLUMN));

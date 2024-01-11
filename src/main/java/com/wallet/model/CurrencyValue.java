@@ -1,8 +1,7 @@
 package com.wallet.model;
 
-import java.time.LocalDateTime;
-
 import com.wallet.annotation.Table;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

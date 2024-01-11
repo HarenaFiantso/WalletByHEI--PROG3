@@ -1,8 +1,8 @@
 package com.wallet.model;
 
 import com.wallet.annotation.Table;
-import com.wallet.model.types.CurrencyCodeType;
-import com.wallet.model.types.CurrencyNameType;
+import com.wallet.model.type.CurrencyCodeType;
+import com.wallet.model.type.CurrencyNameType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

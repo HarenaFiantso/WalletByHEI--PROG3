@@ -2,6 +2,7 @@ package com.wallet.repository.implementations;
 
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.Account;
+import com.wallet.model.type.AccountType;
 import com.wallet.repository.CrudOperations;
 import java.sql.*;
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public class AccountCrudOperations implements CrudOperations<Account> {
         Account account = new Account();
         account.setAccountId(resultSet.getLong(ACCOUNT_ID_COLUMN));
         account.setAccountName(resultSet.getString(ACCOUNT_NAME_COLUMN));
-        account.setAccountType(resultSet.getString(ACCOUNT_TYPE_COLUMN));
+        account.setAccountType(AccountType.valueOf(resultSet.getString(ACCOUNT_TYPE_COLUMN)));
         account.setCurrencyId(resultSet.getInt(CURRENCY_ID_COLUMN));
 
         accounts.add(account);
@@ -107,13 +108,13 @@ public class AccountCrudOperations implements CrudOperations<Account> {
         QUERY = INSERT_QUERY;
         statement = connection.prepareStatement(QUERY, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, toSave.getAccountName());
-        statement.setString(2, toSave.getAccountType());
+        statement.setString(2, String.valueOf(toSave.getAccountType()));
         statement.setInt(3, toSave.getCurrencyId());
       } else {
         QUERY = UPDATE_QUERY;
         statement = connection.prepareStatement(QUERY);
         statement.setString(1, toSave.getAccountName());
-        statement.setString(2, toSave.getAccountType());
+        statement.setString(2, String.valueOf(toSave.getAccountType()));
         statement.setInt(3, toSave.getCurrencyId());
         statement.setLong(4, toSave.getAccountId());
       }
@@ -126,7 +127,7 @@ public class AccountCrudOperations implements CrudOperations<Account> {
         if (resultSet.next()) {
           Account savedAccount = new Account();
           savedAccount.setAccountName(resultSet.getString(ACCOUNT_NAME_COLUMN));
-          savedAccount.setAccountType(resultSet.getString(ACCOUNT_TYPE_COLUMN));
+          savedAccount.setAccountType(AccountType.valueOf(resultSet.getString(ACCOUNT_TYPE_COLUMN)));
           savedAccount.setCurrencyId(resultSet.getInt(CURRENCY_ID_COLUMN));
 
           return savedAccount;

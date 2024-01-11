@@ -1,6 +1,7 @@
 package com.wallet.service;
 
 import com.wallet.model.*;
+import com.wallet.model.type.TransactionType;
 import com.wallet.repository.implementations.CurrencyCrudOperations;
 import com.wallet.repository.implementations.CurrencyValueCrudOperations;
 import com.wallet.repository.implementations.TransactionCrudOperations;
@@ -12,8 +13,7 @@ public class TransferService {
   private final CurrencyCrudOperations currencyCrudOperations = new CurrencyCrudOperations();
   private final CurrencyValueCrudOperations currencyValueCrudOperations =
       new CurrencyValueCrudOperations();
-  TransactionCrudOperations transactionCrudOperations =
-      new TransactionCrudOperations();
+  TransactionCrudOperations transactionCrudOperations = new TransactionCrudOperations();
   private final TransferHistoryCrudOperations transferHistoryCrudOperations =
       new TransferHistoryCrudOperations();
 
@@ -46,7 +46,7 @@ public class TransferService {
   private Transaction createTransaction(Account account, Double amount, String transactionType) {
     Transaction transaction = new Transaction();
     transaction.setTransactionDate(Timestamp.valueOf(LocalDateTime.now()));
-    transaction.setTransactionType(transactionType);
+    transaction.setTransactionType(TransactionType.valueOf(transactionType));
     transaction.setAmount(amount);
     transaction.setAccountId(Math.toIntExact(account.getAccountId()));
 

@@ -1,9 +1,8 @@
 package com.wallet.model;
 
-import java.sql.Timestamp;
-
 import com.wallet.annotation.Table;
-import com.wallet.model.types.TransactionType;
+import com.wallet.model.type.TransactionType;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +18,5 @@ public class Transaction {
   private Timestamp transactionDate;
   private TransactionType transactionType;
   private int accountId;
+  private int categoryId;
 }

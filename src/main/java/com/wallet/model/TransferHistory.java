@@ -1,8 +1,7 @@
 package com.wallet.model;
 
-import java.sql.Timestamp;
-
 import com.wallet.annotation.Table;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

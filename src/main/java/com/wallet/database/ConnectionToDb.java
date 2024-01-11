@@ -5,25 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionToDb {
-  /* TODO: Put credentials to environment variable */
-
-  private static Connection connection;
+  private static final String DB_URL = "jdbc:postgresql://localhost:5432/wallet_by_hei";
+  private static final String DB_USERNAME = "postgres";
+  private static final String DB_PASSWORD = "tsy tadidiko";
 
   public static Connection getConnection() {
-    try {
-      if (connection == null || connection.isClosed()) {
-        String DB_URL = System.getenv("DB_URL");
-        String DB_USERNAME = System.getenv("DB_USERNAME");
-        String DB_PASSWORD = System.getenv("DB_PASSWORD");
+    Connection connection;
 
-        try {
-          connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-        } catch (SQLException e) {
-          throw new RuntimeException(STR."Cannot connect to database : \{e.getMessage()}");
-        }
+    try {
+      connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+
+      if (connection != null) {
+        System.out.println("Connected to Postgres server successfully");
+      } else {
+        System.out.println("Failed to make connection");
       }
     } catch (SQLException e) {
-      throw new RuntimeException(STR."Failed to get connection : \{e.getMessage()}");
+      throw new RuntimeException(STR."Failed to connect to database\{e.getMessage()}");
     }
     return connection;
   }
