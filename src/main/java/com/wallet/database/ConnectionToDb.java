@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static java.lang.StringTemplate.STR;
+
 public class ConnectionToDb {
   /* TODO: Put credentials to environment variable */
 
