@@ -5,6 +5,8 @@ import com.wallet.model.CurrencyValue;
 import com.wallet.model.Transaction;
 import com.wallet.repository.implementations.CurrencyValueCrudOperations;
 import com.wallet.repository.implementations.TransactionCrudOperations;
+import org.springframework.stereotype.Service;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@Service
 public class AccountService {
 
   /* TODO: Create a function that allows you to obtain the balance of an account at a given date and time

@@ -5,10 +5,12 @@ import com.wallet.model.Currency;
 import com.wallet.model.type.CurrencyCodeType;
 import com.wallet.model.type.CurrencyNameType;
 import com.wallet.repository.CrudOperations;
+import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class CurrencyCrudOperations implements CrudOperations<Currency> {
   private static final String CURRENCY_ID_COLUMN = "currency_id";
   private static final String CURRENCY_NAME_COLUMN = "currency_name";

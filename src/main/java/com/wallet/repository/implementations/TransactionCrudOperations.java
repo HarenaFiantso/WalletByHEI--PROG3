@@ -4,6 +4,7 @@ import com.wallet.database.ConnectionToDb;
 import com.wallet.model.Account;
 import com.wallet.model.Transaction;
 import com.wallet.repository.CrudOperations;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import static java.lang.StringTemplate.STR;
 
+@Repository
 public class TransactionCrudOperations implements CrudOperations<Transaction> {
   private static final String TRANSACTION_ID_COLUMN = "transaction_id";
   private static final String TRANSACTION_DATE_COLUMN = "transaction_date";

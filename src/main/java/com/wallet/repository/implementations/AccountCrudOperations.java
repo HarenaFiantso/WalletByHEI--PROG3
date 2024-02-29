@@ -3,12 +3,15 @@ package com.wallet.repository.implementations;
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.Account;
 import com.wallet.repository.CrudOperations;
+import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.StringTemplate.STR;
 
+@Repository
 public class AccountCrudOperations implements CrudOperations<Account> {
   private static final String ACCOUNT_ID_COLUMN = "account_id";
   private static final String ACCOUNT_NAME_COLUMN = "account_name";
