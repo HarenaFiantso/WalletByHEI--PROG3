@@ -3,12 +3,12 @@ package com.wallet.service;
 import com.wallet.model.Account;
 import com.wallet.model.CurrencyValue;
 import com.wallet.model.Transaction;
+import com.wallet.repository.implementations.AccountCrudOperations;
 import com.wallet.repository.implementations.CurrencyValueCrudOperations;
 import com.wallet.repository.implementations.TransactionCrudOperations;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashMap;
@@ -21,6 +21,31 @@ public class AccountService {
 
   /* TODO: Create a function that allows you to obtain the balance of an account at a given date and time
    *   - Should write test for this method */
+
+
+  public AccountCrudOperations accountCrudOperations;
+
+  public AccountService(AccountCrudOperations accountCrudOperations){
+    this.accountCrudOperations = accountCrudOperations;
+  }
+
+  public Account insertAccount(Account account) {
+    accountCrudOperations.save(account);
+    return account;
+  }
+
+  public List<Account> getAll() {
+    return accountCrudOperations.findAll();
+  }
+
+  public Account getById(Long id) {
+    return accountCrudOperations.findById(id);
+  }
+
+  public void deleteById(Account toDelete) {
+    accountCrudOperations.delete(toDelete);
+  }
+
   public Double getBalanceAtDateTime(Account account, LocalDateTime dateTime) {
     List<Transaction> transactions = account.getTransactionList();
 
