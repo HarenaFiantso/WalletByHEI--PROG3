@@ -3,10 +3,13 @@ package com.wallet.service;
 import com.wallet.model.Account;
 import com.wallet.model.Transaction;
 import com.wallet.model.type.TransactionType;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+@Service
 public class TransactionService {
 
   /* TODO: Create a function that allows you to make a transaction in an account (debit or credit)

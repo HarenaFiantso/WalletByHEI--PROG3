@@ -1,5 +1,6 @@
 package com.wallet.database;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class ConnectionToDb {
       if (connection == null || connection.isClosed()) {
         String DB_URL = "jdbc:postgresql://localhost:5432/wallet_by_hei";
         String DB_USERNAME = "postgres";
-        String DB_PASSWORD = "tsy tadidiko";
+        String DB_PASSWORD = "root";
 
         try {
           connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);

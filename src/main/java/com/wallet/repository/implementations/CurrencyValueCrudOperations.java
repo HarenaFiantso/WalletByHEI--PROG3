@@ -3,9 +3,12 @@ package com.wallet.repository.implementations;
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.CurrencyValue;
 import com.wallet.repository.CrudOperations;
+import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.List;
 
+@Repository
 public class CurrencyValueCrudOperations implements CrudOperations<CurrencyValue> {
   private static final String CURRENCY_VALUE_ID_COLUMN = "currency_value_id";
   private static final String CURRENCY_VALUE_DATE_COLUMN = "currency_value_date";

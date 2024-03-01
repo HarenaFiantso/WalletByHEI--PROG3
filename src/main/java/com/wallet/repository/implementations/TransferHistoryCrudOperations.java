@@ -3,12 +3,15 @@ package com.wallet.repository.implementations;
 import com.wallet.database.ConnectionToDb;
 import com.wallet.model.TransferHistory;
 import com.wallet.repository.CrudOperations;
+import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.StringTemplate.STR;
 
+@Repository
 public class TransferHistoryCrudOperations implements CrudOperations<TransferHistory> {
   private static final String TRANSFER_HISTORY_ID_COLUMN = "transfer_history_id";
   private static final String TRANSFER_DATE_COLUMN = "transfer_date";

@@ -5,9 +5,12 @@ import com.wallet.repository.implementations.CurrencyCrudOperations;
 import com.wallet.repository.implementations.CurrencyValueCrudOperations;
 import com.wallet.repository.implementations.TransactionCrudOperations;
 import com.wallet.repository.implementations.TransferHistoryCrudOperations;
+import org.springframework.stereotype.Service;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+@Service
 public class TransferService {
   private final CurrencyCrudOperations currencyCrudOperations = new CurrencyCrudOperations();
   private final CurrencyValueCrudOperations currencyValueCrudOperations =

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.wallet.repository.implementations.AccountCrudOperations;
 import com.wallet.repository.implementations.CurrencyValueCrudOperations;
 import com.wallet.repository.implementations.TransactionCrudOperations;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,10 +25,11 @@ import org.mockito.ArgumentMatchers;
 public class AccountServiceIT {
 
   private AccountService accountService;
+  private AccountCrudOperations accountCrudOperations;
 
   @BeforeEach
   void setUp() {
-    accountService = new AccountService();
+    accountService = new AccountService(accountCrudOperations);
   }
 
   @Test
